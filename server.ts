@@ -1,23 +1,15 @@
-import { Client, GatewayIntentBits } from "discord.js";
+import { Client, GatewayIntentBits, REST, Routes } from "discord.js";
+import { listCommands } from "./commands/commands";
+const fs = require("fs");
 require("dotenv").config();
 
-import { REST, Routes } from "discord.js";
-
-const commands = [
-  {
-    name: "ping",
-    description: "Replies with Pong!",
-  },
-];
-
 const rest = new REST({ version: "10" }).setToken(process.env.TOKEN || "");
-
 try {
   console.log("Started refreshing application (/) commands.");
 
   rest
     .put(Routes.applicationCommands(process.env.APPLICATION_ID || ""), {
-      body: commands,
+      body: listCommands,
     })
     .then(() => {
       console.log("Successfully reloaded application (/) commands.");
@@ -37,9 +29,17 @@ client.on("ready", () => {
 client.on("interactionCreate", async (interaction: any) => {
   if (!interaction.isChatInputCommand()) return;
 
-  if (interaction.commandName === "ping") {
-    await interaction.reply("Pong!");
-  }
+  fs.readdir("./events/", (err: any, files: any) => {
+    if (err) return console.error(err);
+    files.forEach(async (file: any) => {
+      let eventName = file.split(".")[0];
+      if (interaction.commandName === eventName) {
+        const event = require(`./events/${file}`);
+        await event(client, interaction);
+        return;
+      }
+    });
+  });
 });
 
 client.login(process.env.TOKEN || "");
