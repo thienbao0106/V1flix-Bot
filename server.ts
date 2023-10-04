@@ -28,7 +28,7 @@ client.on("ready", () => {
 
 client.on("interactionCreate", async (interaction: any) => {
   if (!interaction.isChatInputCommand()) return;
-
+  console.log(interaction.isStringSelectMenu());
   fs.readdir("./events/", (err: any, files: any) => {
     if (err) return console.error(err);
     files.forEach(async (file: any) => {
