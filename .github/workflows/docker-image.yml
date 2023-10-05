@@ -18,6 +18,6 @@ jobs:
           DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
         run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
       - name: Docker Build
-        run: docker build . --file Dockerfile --tag v1sion0106/v1flix:${{ github.sha }}
+        run: docker build . --file Dockerfile --tag v1sion0106/v1flix:discord
       - name: Docker Push
-        run: docker push v1sion0106/v1flix:${{ github.sha }}
+        run: docker push v1sion0106/v1flix:discord
