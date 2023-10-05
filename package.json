@@ -2,6 +2,7 @@
   "name": "V1flix-Discord",
   "version": "1.0.0",
   "license": "ISC",
+  "type": "module",
   "scripts": {
     "dev": "nodemon server.ts"
   },
