@@ -23,4 +23,8 @@ export const listCommands: Commands[] = [
       },
     ],
   },
+  {
+    name: "random",
+    description: "Give you a random show",
+  },
 ];

@@ -39,14 +39,14 @@ module.exports = async (client: any, interaction: any) => {
   const result = await axios.post(process.env.SERVER_API || "", {
     operationName: "findSeriesByName",
     query: `query findSeriesByName {
-        findSeries(title: "${keyword}") {
+        findSeries(title: "${keyword}", numOfLimit: 0) {
           _id
           title
           description
           type
           total_episodes
           status
-         
+          season
           images {
             type
             source
@@ -68,6 +68,14 @@ module.exports = async (client: any, interaction: any) => {
     .setTitle(`Search results for ${keyword}`)
     .setDescription(
       `Found ${findSeries.length}. Please pick one option in dropdown below.`
+    )
+    .addFields(
+      findSeries.map((series: any) => {
+        return {
+          name: series.title,
+          value: series.season,
+        };
+      })
     );
   const select = new StringSelectMenuBuilder()
     .setCustomId("v1flix")
