@@ -8,24 +8,22 @@ import {
   StringSelectMenuBuilder,
   StringSelectMenuOptionBuilder,
 } from "discord.js";
+import { errorEmbed } from "../utils/error";
+import { AVATAR_DISCORD, MAIN_URL } from "../utils/url";
 
 const createEmbed = (user: any, series: any, image: any) => {
   return new EmbedBuilder()
     .setAuthor({
       name: user.globalName,
-      iconURL: `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`,
+      iconURL: AVATAR_DISCORD(user),
     })
     .setColor(Colors.Blue)
     .setDescription(series.description)
     .setThumbnail(image.source)
     .setTitle(series.title)
-    .setURL(
-      `https://v2flix.netlify.app/series/${series.title.replaceAll(
-        " ",
-        "%20"
-      )}?ep=1`
-    )
+    .setURL(MAIN_URL(series.title, 1))
     .addFields(
+      { name: "ID", value: `${series._id}`, inline: true },
       { name: "Type", value: `${series.type}`, inline: true },
       { name: "Episodes", value: `${series.total_episodes}`, inline: true },
       { name: "Status", value: `${series.status}`, inline: true }
@@ -57,8 +55,18 @@ module.exports = async (client: any, interaction: any) => {
     variables: {},
   });
   const { findSeries } = result.data.data;
-  if (findSeries.length === 0)
-    await interaction.reply(`Can't find the result with keyword: ${keyword}`);
+  if (findSeries.length === 0) {
+    await interaction.reply({
+      embeds: [
+        errorEmbed(
+          user,
+          `Can't find the result with keyword: ${keyword}`,
+          `Search series`
+        ),
+      ],
+    });
+    return;
+  }
 
   const searchEmbed = new EmbedBuilder()
     .setAuthor({

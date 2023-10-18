@@ -27,4 +27,22 @@ export const listCommands: Commands[] = [
     name: "random",
     description: "Give you a random show",
   },
+  {
+    name: "episode",
+    description: "Help you check the episode",
+    options: [
+      {
+        name: "id",
+        description: "Input series id",
+        type: ApplicationCommandOptionType.String,
+        required: true,
+      },
+      {
+        name: "ep",
+        description: "Input your episode number",
+        type: ApplicationCommandOptionType.Integer,
+        required: true,
+      },
+    ],
+  },
 ];

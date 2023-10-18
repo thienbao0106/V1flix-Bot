@@ -1,6 +1,7 @@
 import axios from "axios";
 import { Colors, EmbedBuilder } from "discord.js";
 import { getImage } from "../utils/image";
+import { AVATAR_DISCORD, MAIN_URL } from "../utils/url";
 
 module.exports = async (client: any, interaction: any) => {
   const { user } = interaction.member;
@@ -30,18 +31,13 @@ module.exports = async (client: any, interaction: any) => {
   const randomSeriesEmbed = new EmbedBuilder()
     .setAuthor({
       name: user.globalName,
-      iconURL: `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`,
+      iconURL: AVATAR_DISCORD(user),
     })
     .setColor(Colors.Blue)
     .setDescription(series.description)
     .setThumbnail(image.source)
     .setTitle(series.title)
-    .setURL(
-      `https://v2flix.netlify.app/series/${series.title.replaceAll(
-        " ",
-        "%20"
-      )}?ep=1`
-    )
+    .setURL(MAIN_URL(series.title, 1))
     .addFields(
       { name: "Type", value: `${series.type}`, inline: true },
       { name: "Episodes", value: `${series.total_episodes}`, inline: true },
