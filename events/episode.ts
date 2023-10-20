@@ -23,6 +23,9 @@ module.exports = async (client: any, interaction: any) => {
                           source
                         }
                     }
+                    subtitles {
+                      label
+                    }
                     updated_at
                     created_at
                     view
@@ -46,6 +49,12 @@ module.exports = async (client: any, interaction: any) => {
   }
   const image: any = getImage(episode.series.images, "cover");
 
+  const listSubtitles: string = episode.subtitles
+    .map((sub: any) => {
+      return sub.label;
+    })
+    .join(", ");
+  console.log(listSubtitles);
   const episodeEmbed = new EmbedBuilder()
     .setAuthor({
       name: user.globalName,
@@ -66,7 +75,8 @@ module.exports = async (client: any, interaction: any) => {
         value: `${moment(episode.updated_at).fromNow()}`,
         inline: true,
       },
-      { name: "View", value: `${episode.view}`, inline: true }
+      { name: "View", value: `${episode.view}`, inline: true },
+      { name: "Subtitles", value: listSubtitles, inline: true }
     );
   await interaction.reply({
     content: `Episode Info: **${epNum}** - From:  **${episode.series.title}**`,
