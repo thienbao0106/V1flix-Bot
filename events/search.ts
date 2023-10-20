@@ -9,7 +9,7 @@ import {
   StringSelectMenuOptionBuilder,
 } from "discord.js";
 import { errorEmbed } from "../utils/error";
-import { AVATAR_DISCORD, MAIN_URL } from "../utils/url";
+import { AVATAR_DISCORD, MAIN_URL } from "../constants/url";
 
 const createEmbed = (user: any, series: any, image: any) => {
   return new EmbedBuilder()

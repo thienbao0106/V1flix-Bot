@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Colors, EmbedBuilder } from "discord.js";
 import { getImage } from "../utils/image";
-import { AVATAR_DISCORD, MAIN_URL } from "../utils/url";
+import { AVATAR_DISCORD, MAIN_URL } from "../constants/url";
 
 module.exports = async (client: any, interaction: any) => {
   const { user } = interaction.member;

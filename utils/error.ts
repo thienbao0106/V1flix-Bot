@@ -1,5 +1,5 @@
 import { Colors, EmbedBuilder } from "discord.js";
-import { AVATAR_DISCORD } from "./url";
+import { AVATAR_DISCORD } from "../constants/url";
 
 export const errorEmbed = (user: any, message: string, title: string) => {
   return (

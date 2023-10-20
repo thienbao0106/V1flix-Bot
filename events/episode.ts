@@ -1,7 +1,7 @@
 import axios from "axios";
 import { errorEmbed } from "../utils/error";
 import { Colors, EmbedBuilder } from "discord.js";
-import { AVATAR_DISCORD, MAIN_URL } from "../utils/url";
+import { AVATAR_DISCORD, MAIN_URL } from "../constants/url";
 import { getImage } from "../utils/image";
 import moment from "moment";
 
