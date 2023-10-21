@@ -18,7 +18,25 @@ const seriesEmbed = (series: any) => {
     });
 };
 
+const episodeEmbed = (episodes: any, images: any, title: string) => {
+  console.log(images);
+  const image: any = getImage(images, "cover");
+  const latestEpisode = episodes[episodes.length - 1];
+  return new EmbedBuilder()
+    .setTimestamp()
+    .setTitle(`New ep: ${latestEpisode.epNum}`)
+    .setImage(image.source)
+    .setDescription(latestEpisode.title)
+    .addFields({
+      name: "URL",
+      value: MAIN_URL(title, latestEpisode.epNum),
+      inline: false,
+    });
+};
+
 module.exports = async (client: any, interaction: any) => {
+  console.log(interaction);
+
   const title = interaction.options.get("id").value;
   const result = await axios.post(process.env.SERVER_API || "", {
     operationName: "findSeriesByName",
@@ -26,14 +44,14 @@ module.exports = async (client: any, interaction: any) => {
               findSeries(title: "${title}", numOfLimit: 0) {
                 _id
                 title
-                description
-                type
-                total_episodes
-                status
-                season
                 images {
                   type
                   source
+                }
+                episodes {
+                  _id
+                  title
+                  epNum
                 }
               }
             }
@@ -41,14 +59,20 @@ module.exports = async (client: any, interaction: any) => {
     variables: {},
   });
   const { findSeries: series } = result.data.data;
-  console.log(series[0]);
+
   if (interaction.options._subcommand === "series") {
-    await interaction.reply({
+    await interaction.channel.send({
       content: "A new series has been added",
       embeds: [seriesEmbed(series[0])],
     });
     return;
   }
 
-  await interaction.reply(`API Latency: ${Math.round(client.ws.ping)}ms`);
+  await interaction.channel.send({
+    content: `A new episodes has been added for ${title}`,
+    embeds: [
+      episodeEmbed(series[0].episodes, series[0].images, series[0].title),
+    ],
+  });
+  return;
 };

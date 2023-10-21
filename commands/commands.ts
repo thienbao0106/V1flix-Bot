@@ -46,6 +46,8 @@ export const listCommands: Commands[] = [
     ],
   },
   {
+    name: "new",
+    description: "Update the new information",
     options: [
       {
         type: ApplicationCommandOptionType.Subcommand,
@@ -63,9 +65,14 @@ export const listCommands: Commands[] = [
         type: ApplicationCommandOptionType.Subcommand,
         name: "episode",
         description: "Update the new uploaded episode",
+        options: [
+          {
+            name: "id",
+            type: ApplicationCommandOptionType.String,
+            description: "Id of the updated series",
+          },
+        ],
       },
     ],
-    name: "new",
-    description: "Update the new information",
   },
 ];
