@@ -16,6 +16,10 @@ module.exports = async (client: any, interaction: any) => {
                     _id
                     title
                     epNum
+                    source {
+                      _id
+                      kind
+                    }
                     series {
                         title
                         images {
@@ -54,7 +58,12 @@ module.exports = async (client: any, interaction: any) => {
       return sub.label;
     })
     .join(", ");
-  console.log(listSubtitles);
+  const listSources: string = episode.source
+    .map((src: any) => {
+      return src.kind === "onedrive" ? "Onedrive" : "Google Drive";
+    })
+    .join(", ");
+  console.log(episode.source);
   const episodeEmbed = new EmbedBuilder()
     .setAuthor({
       name: user.globalName,
@@ -76,7 +85,8 @@ module.exports = async (client: any, interaction: any) => {
         inline: true,
       },
       { name: "View", value: `${episode.view}`, inline: true },
-      { name: "Subtitles", value: listSubtitles, inline: true }
+      { name: "Subtitles", value: listSubtitles, inline: true },
+      { name: "Video Sources", value: listSources, inline: true }
     );
   await interaction.reply({
     content: `Episode Info: **${epNum}** - From:  **${episode.series.title}**`,

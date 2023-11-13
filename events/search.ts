@@ -9,26 +9,7 @@ import {
   StringSelectMenuOptionBuilder,
 } from "discord.js";
 import { errorEmbed } from "../utils/error";
-import { AVATAR_DISCORD, MAIN_URL } from "../constants/url";
-
-const createEmbed = (user: any, series: any, image: any) => {
-  return new EmbedBuilder()
-    .setAuthor({
-      name: user.globalName,
-      iconURL: AVATAR_DISCORD(user),
-    })
-    .setColor(Colors.Blue)
-    .setDescription(series.description)
-    .setThumbnail(image.source)
-    .setTitle(series.title)
-    .setURL(MAIN_URL(series.title, 1))
-    .addFields(
-      { name: "ID", value: `${series._id}`, inline: true },
-      { name: "Type", value: `${series.type}`, inline: true },
-      { name: "Episodes", value: `${series.total_episodes}`, inline: true },
-      { name: "Status", value: `${series.status}`, inline: true }
-    );
-};
+import { SERIES_EMBEDED } from "../constants/seriesEmbed";
 
 module.exports = async (client: any, interaction: any) => {
   const keyword = interaction.options.get("keyword").value;
@@ -110,7 +91,7 @@ module.exports = async (client: any, interaction: any) => {
     const idSelected = i.values[0];
     const series = findSeries.find((series: any) => series._id === idSelected);
     const image = getImage(series.images, "cover");
-    const seriesEmbed = createEmbed(user, series, image);
+    const seriesEmbed = SERIES_EMBEDED(user, series, image);
     await i.reply({
       embeds: [seriesEmbed],
     });
