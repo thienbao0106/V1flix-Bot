@@ -84,6 +84,7 @@ module.exports = async (client: any, interaction: any) => {
         value: `${moment(episode.updated_at).fromNow()}`,
         inline: true,
       },
+      { name: "Id", value: `${episode._id}`, inline: true },
       { name: "View", value: `${episode.view}`, inline: true },
       { name: "Subtitles", value: listSubtitles, inline: true },
       { name: "Video Sources", value: listSources, inline: true }

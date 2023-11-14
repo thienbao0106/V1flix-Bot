@@ -75,4 +75,39 @@ export const listCommands: Commands[] = [
       },
     ],
   },
+  {
+    name: "source",
+    description: "Help you check the website's episode sources",
+    options: [
+      {
+        name: "video",
+        type: ApplicationCommandOptionType.Subcommand,
+        description: "Check video source of an episode",
+        options: [
+          {
+            name: "id",
+            type: ApplicationCommandOptionType.String,
+            description: "Id of the episode",
+          },
+        ],
+      },
+      {
+        name: "subtitles",
+        type: ApplicationCommandOptionType.Subcommand,
+        description: "Check subtitles source of an episode",
+        options: [
+          {
+            name: "id",
+            type: ApplicationCommandOptionType.String,
+            description: "Id of the episode",
+          },
+          {
+            name: "lang",
+            type: ApplicationCommandOptionType.String,
+            description: "Languages of the episode's subtitles",
+          },
+        ],
+      },
+    ],
+  },
 ];

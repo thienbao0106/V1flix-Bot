@@ -35,8 +35,6 @@ const episodeEmbed = (episodes: any, images: any, title: string) => {
 };
 
 module.exports = async (client: any, interaction: any) => {
-  console.log(interaction);
-
   const title = interaction.options.get("id").value;
   const result = await axios.post(process.env.SERVER_API || "", {
     operationName: "findSeriesByName",
