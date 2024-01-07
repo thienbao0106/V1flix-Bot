@@ -12,7 +12,7 @@ export const listCommands: Commands[] = [
     description: "Show your internet connection",
   },
   {
-    name: "search",
+    name: "series",
     description: "Search a show by title",
     options: [
       {
@@ -72,6 +72,18 @@ export const listCommands: Commands[] = [
             description: "Id of the updated series",
           },
         ],
+      },
+    ],
+  },
+  {
+    name: "user",
+    description: "Help you find any user available",
+    options: [
+      {
+        name: "name",
+        type: ApplicationCommandOptionType.String,
+        description: "Name of user",
+        required: true,
       },
     ],
   },

@@ -1,4 +1,4 @@
-import { getImage } from "./../utils/image";
+import { getImage } from "../utils/image";
 import axios from "axios";
 import {
   ActionRowBuilder,
@@ -20,12 +20,16 @@ module.exports = async (client: any, interaction: any) => {
     query: `query findSeriesByName {
         findSeries(title: "${keyword}", numOfLimit: 0) {
           _id
-          title
+          title {
+            main_title
+            alt_title
+          }
           description
           type
           total_episodes
           status
           season
+          duration
           images {
             type
             source
@@ -61,7 +65,7 @@ module.exports = async (client: any, interaction: any) => {
     .addFields(
       findSeries.map((series: any) => {
         return {
-          name: series.title,
+          name: series.title.main_title,
           value: series.season,
         };
       })
@@ -72,7 +76,7 @@ module.exports = async (client: any, interaction: any) => {
     .addOptions(
       findSeries.map((series: any) =>
         new StringSelectMenuOptionBuilder()
-          .setLabel(series.title)
+          .setLabel(series.title.main_title)
           .setValue(series._id)
       )
     );

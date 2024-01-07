@@ -10,7 +10,10 @@ module.exports = async (client: any, interaction: any) => {
     query: `query randomSeries {
         randomSeries {
               _id
-              title
+              title {
+                main_title
+                alt_title
+              }
               description
               type
               total_episodes
@@ -32,7 +35,7 @@ module.exports = async (client: any, interaction: any) => {
   const image: any = getImage(series.images, "cover");
   const randomSeriesEmbed = SERIES_EMBEDED(user, series, image);
   interaction.reply({
-    content: `I will give you **${series.title}**`,
+    content: `I will give you **${series.title.main_title}**`,
     fetchReply: true,
     embeds: [randomSeriesEmbed],
   });

@@ -9,11 +9,11 @@ const seriesEmbed = (series: any) => {
   return new EmbedBuilder()
     .setImage(image.source)
     .setColor(Colors.Green)
-    .setTitle(series.title)
+    .setTitle(series.title.main_title)
     .setTimestamp()
     .addFields({
       name: "URL",
-      value: MAIN_URL(series.title, 1),
+      value: MAIN_URL(series.title.main_title, 1),
       inline: false,
     });
 };
@@ -41,7 +41,10 @@ module.exports = async (client: any, interaction: any) => {
     query: `query findSeriesByName {
               findSeries(title: "${title}", numOfLimit: 0) {
                 _id
-                title
+                title {
+                  main_title
+                  alt_title
+                }
                 images {
                   type
                   source
@@ -51,6 +54,7 @@ module.exports = async (client: any, interaction: any) => {
                   title
                   epNum
                 }
+                
               }
             }
           `,

@@ -21,7 +21,10 @@ module.exports = async (client: any, interaction: any) => {
                       kind
                     }
                     series {
-                        title
+                        title {
+                          main_title
+                          alt_title
+                        }
                         images {
                           type
                           source
@@ -72,7 +75,7 @@ module.exports = async (client: any, interaction: any) => {
     .setColor(Colors.Blue)
     .setTitle(episode.title)
     .setThumbnail(image.source)
-    .setURL(MAIN_URL(episode.series.title, epNum))
+    .setURL(MAIN_URL(episode.series.title.main_title, epNum))
     .addFields(
       {
         name: "Created At",
@@ -90,7 +93,7 @@ module.exports = async (client: any, interaction: any) => {
       { name: "Video Sources", value: listSources, inline: true }
     );
   await interaction.reply({
-    content: `Episode Info: **${epNum}** - From:  **${episode.series.title}**`,
+    content: `Episode Info: **${epNum}** - From:  **${episode.series.title.main_title}**`,
     embeds: [episodeEmbed],
   });
 };
