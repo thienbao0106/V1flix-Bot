@@ -1,10 +1,12 @@
 import { Colors, EmbedBuilder } from "discord.js";
 import { AVATAR_DISCORD, MAIN_URL } from "./url";
 import { formatDuration } from "../utils/source";
+import { formatString } from "../utils/string";
 
 //User is a user in Discord
 export const SERIES_EMBEDED = (user: any, series: any, image: any) => {
   console.log(image);
+  const formattedDescription = formatString(series.description);
   const defaultImage =
     "https://res.cloudinary.com/dgcvss8u6/image/upload/v1/anime-v2/cover/default-cover.jpg";
   console.log(series._episodes);
@@ -18,7 +20,7 @@ export const SERIES_EMBEDED = (user: any, series: any, image: any) => {
     })
     .setColor(Colors.Blue)
     .setTitle(series.title.main_title)
-    .setDescription(`${series.title.alt_title}\n\n${series.description}`)
+    .setDescription(`${series.title.alt_title}\n\n${formattedDescription}`)
     .setThumbnail(image ? image.source : defaultImage)
     .setURL(MAIN_URL(series.title.main_title, 1))
     .addFields(

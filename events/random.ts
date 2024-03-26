@@ -14,6 +14,7 @@ module.exports = async (client: any, interaction: any) => {
                 main_title
                 alt_title
               }
+              duration
               description
               type
               total_episodes
